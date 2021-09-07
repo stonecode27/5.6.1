@@ -1,16 +1,78 @@
-# This is a sample Python script.
+# Написать игру "Крестики-нолики"
+# Размер поля предполагается равным 3x3.
+#
+# Пример печати поля в консоль:
+#   0 1 2
+# 0 x x o
+# 1 o x -
+# 2 - o -
+import time  # Библиотека time для выставления задержек
+print("Добро пожаловать в игру 'Крестики-нолики'")
+print("created by stonecode27")
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Переменная main_menu - текст главного меню
+main_menu = """
 
+Главное меню
+Отправьте "старт", чтобы начать игру
+Отправьте "правила", чтобы узнать правила игры
+Отправьте "настройки", чтобы изменить настройки
+Отправьте "выход", чтобы выйти из программы
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+"""
+# Переменная menu - текст приглашения коммандной строки
+menu = ">"
 
+# Переменная rules - текст правил игры
+rules = """
+        
+Игроки ходят поочереди.
+Первыми ходят крестики (х). 
+Чтобы поставить "х" или "о"
+отправьте адрес поля в формате "ху",
+где "х" номер столбца,
+а "y" номер строки.
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+        """
+# Переменные s1-s9 - "клетки" игрового поля
+s1, s2, s3, s4, s5, s6, s7, s8, s9 = "#", "#", "#", "#", "#", "#", "#", "#", "#"
+# Переменная turns - текст-приглашение коммандной строки сделать ход в игре
+turns = "Отправьте адрес поля \n >"
+# Переменная address_error - текст ошибки неправильного адреса клетки
+address_error = "Поля с таким адресом не существует"
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Цикл, вызывающий главное меню
+while True:
+    print(main_menu)
+    navigation = input(menu)
+    if navigation == "правила":  # если ввели "правила"
+        print(rules)   # Вывести правила
+        time.sleep(10) # Задержка на показ правил и возвращение в главное меню
+    elif navigation == "старт":  # если ввели "старт"
+        round_count = 1  # переменная round_count cчитает раунды
+        print(f"Раунд {round_count}. Ходят крестики.") # вывод стартового раунда (1)
+        print(f"""  
+          0 1 2
+        0 {s1} {s2} {s3}
+        1 {s4} {s5} {s6}
+        2 {s7} {s8} {s9}
+
+                    """)  # вывод стартового поля
+        while True:  # основной цикл игры
+            address = input(turns)  # ввод адреса клетки
+            try:  # Проверка возможности приведения к типу int
+                address = int(address) # приведение к типу "целое число"
+            except ValueError:  # в случае невозможности приведения к типу int напечатать:
+                print(address_error)
+            else:  # если получилось привести к типу
+                x = address % 10  # присваивание переменным адреса столбца
+                y = address // 10  # ...и строки
+                if 0 <= x < 3 and 0 <= y < 3:  # если значение
+
+                    round_count += 1
+                else:
+                    print(address_error)
+
+    elif navigation == "выход":
+        print("Выход из игры...")
+        break
