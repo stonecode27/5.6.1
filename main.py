@@ -40,6 +40,10 @@ var_tuple = ("#", "x", "o")
 s1, s2, s3, s4, s5, s6, s7, s8, s9 = var_tuple[0], var_tuple[0], var_tuple[0], \
                                      var_tuple[0], var_tuple[0], var_tuple[0],\
                                      var_tuple[0], var_tuple[0], var_tuple[0]
+# address_list -список адресов клеток
+address_list = ["00","10","20","01","11", "21", "02", "12", "22"]
+# var_list - cписок переменных
+var_list = [s1, s2, s3, s4, s5, s6, s7, s8, s9]
 # Переменная turns - текст-приглашение коммандной строки сделать ход в игре
 turns = "Отправьте адрес поля \n >"
 # Переменная address_error - текст ошибки неправильного адреса клетки
@@ -61,14 +65,22 @@ while True:
         print(rules)   # Вывести правила
         time.sleep(10) # Задержка на показ правил и возвращение в главное меню
     elif navigation == "старт":  # если ввели "старт"
-        round_count = 0  # переменная round_count cчитает ходы
-        print("Начало игры.")
-        print(playing_field)  # вывод стартового поля
         while True:
+            if s1 == var_tuple[0] and s2 == var_tuple[0] and s3 == var_tuple[0]\
+                    and s4 == var_tuple[0] and s5 == var_tuple[0] and s6 == var_tuple[0]\
+                    and s7 == var_tuple[0] and s8 == var_tuple[0] and s9 == var_tuple[0]: # если начало игры и все клетки #
+                round_count = 1  # переменная round_count cчитает ходы, принимает стартовое значение
+                print("Начало игры.")
+                print(f"Ход {round_count}. Ходят 'x'")  # вывод сообщения раунда
+                print(playing_field)  # вывод стартового поля
             address = input(turns)
-            if address in ["00","10","20","01","11", "21", "02", "12", "22"]:
+            if address in address_list:
                 round_count += 1
-
+                x_or_o = "o" if round_count % 2 == 0 else "x"  # переменная x_or_o, принимающая значение крестика или нолика
+                # в зависимости от хода
+                round_m = f"Раунд {round_count}. Ходят '{x_or_o}'."  # сообщение раунда
+                print(round_m)  # вывод сообщения раунда
+                print(playing_field)  # вывод игрового поля
             else:
                 print(address_error)
 
