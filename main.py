@@ -34,44 +34,43 @@ rules = """
 а "y" номер строки.
 
         """
+# Варианты значений клеток
+var_tuple = ("#", "x", "o")
 # Переменные s1-s9 - "клетки" игрового поля
-s1, s2, s3, s4, s5, s6, s7, s8, s9 = "#", "#", "#", "#", "#", "#", "#", "#", "#"
+s1, s2, s3, s4, s5, s6, s7, s8, s9 = var_tuple[0], var_tuple[0], var_tuple[0], \
+                                     var_tuple[0], var_tuple[0], var_tuple[0],\
+                                     var_tuple[0], var_tuple[0], var_tuple[0]
 # Переменная turns - текст-приглашение коммандной строки сделать ход в игре
 turns = "Отправьте адрес поля \n >"
 # Переменная address_error - текст ошибки неправильного адреса клетки
-address_error = "Поля с таким адресом не существует"
+address_error = "Поля с таким адресом не существует!"
 
 # Цикл, вызывающий главное меню
 while True:
+    # Переменная - форматированная строка игрового поля
+    playing_field = f"""  
+              0 1 2
+            0 {s1} {s2} {s3}
+            1 {s4} {s5} {s6}
+            2 {s7} {s8} {s9}
+
+                        """
     print(main_menu)
     navigation = input(menu)
     if navigation == "правила":  # если ввели "правила"
         print(rules)   # Вывести правила
         time.sleep(10) # Задержка на показ правил и возвращение в главное меню
     elif navigation == "старт":  # если ввели "старт"
-        round_count = 1  # переменная round_count cчитает раунды
-        print(f"Раунд {round_count}. Ходят крестики.") # вывод стартового раунда (1)
-        print(f"""  
-          0 1 2
-        0 {s1} {s2} {s3}
-        1 {s4} {s5} {s6}
-        2 {s7} {s8} {s9}
+        round_count = 0  # переменная round_count cчитает ходы
+        print("Начало игры.")
+        print(playing_field)  # вывод стартового поля
+        while True:
+            address = input(turns)
+            if address in ["00","10","20","01","11", "21", "02", "12", "22"]:
+                round_count += 1
 
-                    """)  # вывод стартового поля
-        while True:  # основной цикл игры
-            address = input(turns)  # ввод адреса клетки
-            try:  # Проверка возможности приведения к типу int
-                address = int(address) # приведение к типу "целое число"
-            except ValueError:  # в случае невозможности приведения к типу int напечатать:
+            else:
                 print(address_error)
-            else:  # если получилось привести к типу
-                x = address % 10  # присваивание переменным адреса столбца
-                y = address // 10  # ...и строки
-                if 0 <= x < 3 and 0 <= y < 3:  # если значение
-
-                    round_count += 1
-                else:
-                    print(address_error)
 
     elif navigation == "выход":
         print("Выход из игры...")
